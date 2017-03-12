@@ -1,5 +1,6 @@
-package bettnger;
+package bettnger.repositories;
 
+import bettnger.models.Account;
 import org.springframework.data.repository.CrudRepository;
 
 /**

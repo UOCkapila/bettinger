@@ -1,4 +1,4 @@
-package bettnger;
+package bettnger.models;
 
 public class Greeting {
 
