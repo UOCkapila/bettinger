@@ -18,13 +18,18 @@ public class Event {
     private Date dateTime;
     private String information;
 
+    @ManyToOne
+    @JoinColumn(name = "userDetailId")
+    private UserDetails userDetails;
+
     public Event() {
     }
 
-    public Event(String type, Date dateTime, String information) {
+    public Event(String type, Date dateTime, String information, UserDetails userDetails) {
         this.type = type;
         this.dateTime = dateTime;
         this.information = information;
+        this.userDetails = userDetails;
     }
 
     public int getId() {
@@ -59,4 +64,11 @@ public class Event {
         this.information = information;
     }
 
+    public UserDetails getUserDetails() {
+        return userDetails;
+    }
+
+    public void setUserDetails(UserDetails userDetails) {
+        this.userDetails = userDetails;
+    }
 }

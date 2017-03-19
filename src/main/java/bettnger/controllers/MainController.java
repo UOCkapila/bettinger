@@ -8,11 +8,12 @@ import bettnger.repositories.EventRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
@@ -27,13 +28,15 @@ public class MainController {
     @Autowired
     private AccountRepository accountRepository;
 
-//    @RequestMapping("/bettinger/signup")
+//    @RequestMapping("/")
+//    @ResponseBody
 //    public String index() {
-//        return "Greetings from Spring Boot!";
+//        return "index";
 //    }
 
-    @RequestMapping("/bettinger/signup")
-    public String signUp(Account account) {
+    @RequestMapping(value = "/bettinger/signup", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String signUp(@RequestBody Account account, @RequestHeader HttpHeaders headers, HttpServletRequest httpRequest) {
         accountRepository.save(account);
         return "success";
     }
@@ -63,5 +66,11 @@ public class MainController {
         Iterable<Event> events = eventRepository.findAll();
         return events;
 
+    }
+
+    @RequestMapping("/bettinger/user/get/account")
+    public Account getAccount(String userName){
+        Account account = accountRepository.findByUsername(userName);
+        return account;
     }
 }
